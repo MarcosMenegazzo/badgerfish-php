@@ -1,17 +1,34 @@
-# \Imperium\BadgerFish
-### v1.2.3
+# BadgerFish-PHP
 
-A PHP Library to transform XML into JSON and JSON into XML following the [BadgerFish](http://ajaxian.com/archives/badgerfish-translating-xml-to-json) convention.
+A PHP Library to transform XML into JSON and JSON into XML following the BadgerFish convention.
+
+Forked from [jobywalker/Imperium-BadgerFish](https://github.com/jobywalker/Imperium-BadgerFish) in order to remove namespace and a minor improvement to XML exporting.
+
 
 Usage:
-    <?php
-    use \Imperium\BadgerFish;
-    
-    $xml = '<Root><Children><Child><Order>1</Order><Name>John Doe</Name><Awesome>false</Awesome></Child>'
-          .'<Child><Order>2</Order><Name>Jane Doe</Name><Awesome>true</Awesome></Child></Children></Root>';
-    $json = BadgerFish::xmlToJson($xml);
-    echo $json; # '{"Root":{"Children":{"Child":[{"Order":1,"Name":"John Doe","Awesome":false},{"Order":2,"Name":"Jane Doe","Awesome":true}]}}}'
 
-    echo BadgerFish::jsonToXML($json);
+```php
+$json = '{ "anode": { "@xmlns": "http://anode.ns", "@id": 1, "child": { "@id": 10, "type": "anodes kid", "value": 123.45 } } }';
 
-Joby Walker
+header("content-type: text/plain");
+echo $json;
+echo "\n\n";
+echo BadgerFish::jsonToXML($json);
+```
+## Option(s)
+
+### Does not export xml version tag
+
+If you dont need the `<?xml>` tag starting your output, just do:
+
+```php
+$xml = BadgerFish::jsonToXML($json, false);
+```
+
+The second argument controls the ouput of `<?xml>` tag.
+
+
+## References
+
+* [http://www.sklar.com/badgerfish/](http://www.sklar.com/badgerfish/)
+* [JSON and XML Conversion](http://wiki.open311.org/JSON_and_XML_Conversion/)

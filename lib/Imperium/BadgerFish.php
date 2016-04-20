@@ -163,9 +163,14 @@ class BadgerFish
      * @param mixed $php PHP to transform
      * @return string
      */
-    public static function phpToXml($php)
+    public static function phpToXml($php, $includeXmlVersionTag = false)
     {
+      if($includeXmlVersionTag){
         return self::phpToSXE($php)->asXML();
+      } else {
+        $domXml = dom_import_simplexml(self::phpToSXE($php));
+        return $domXml->ownerDocument->saveXML($domXml->ownerDocument->documentElement);
+      }
     }
 
     /**
